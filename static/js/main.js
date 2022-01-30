@@ -727,13 +727,17 @@ const addBookmarkLink = document.getElementById("addBookmark");
 addBookmarkLink.addEventListener("click", addBookmark);
 function addBookmark (e) {
     e.preventDefault();
-    const stringQuery = "add";
-    sendBookamarkData(`${bookmarkHandler}?query=${stringQuery}`)
+    const actionType = e.target.getAttribute("data-action-bookmark");
+
+    sendBookamarkData(`${bookmarkHandler}?query=${actionType}`)
         .then((data) => {
-            console.log(data.ok);
-            if (data.ok) {
-                addBookmarkLink.outerHTML = '<span class="master__blockHeaderBottomText">In your bookmarks</span>';
-                addBookmarkLink.removeEventListener("click", addBookmark);
+            if (data.ok && actionType === "add") {
+                addBookmarkLink.innerText = 'Remove from bookmarks';
+                e.target.setAttribute("data-action-bookmark", "remove");
+            }
+            if (data.ok && actionType === "remove") {
+                addBookmarkLink.innerText = 'Bookmark this ad';
+                e.target.setAttribute("data-action-bookmark", "add");
             }
         })
 }
