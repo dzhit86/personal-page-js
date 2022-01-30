@@ -732,7 +732,7 @@ if (addBookmarkLink) {
     
         sendBookamarkData(`${bookmarkHandler}?query=${actionType}`)
             .then((data) => {
-                if (data.success) {
+                if (data.success === "true") {
                     if (actionType === "add") {
                         addBookmarkLink.innerText = 'Remove from bookmarks';
                         e.target.setAttribute("data-action-bookmark", "remove");
@@ -743,7 +743,7 @@ if (addBookmarkLink) {
                     }
                 } else {
                     alert(data.error);
-                    //console.log(data)
+                    console.log(data)
                 }
             })
     }

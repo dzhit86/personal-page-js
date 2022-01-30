@@ -1,5 +1,5 @@
 <?php 
-$response["success"] = true;
+$response["success"] = "true";
 $response["error"] = "Oshibka";
 
 header("Content-type: application/json; charset=utf-8");
