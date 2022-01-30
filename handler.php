@@ -1,5 +1,6 @@
 <?php 
-$response =  $_GET['query'];
+$response["success"] = true;
+$response["error"] = "Oshibka";
 
-header("Content-type: text/html; charset=utf-8");
-echo $response;
+header("Content-type: application/json; charset=utf-8");
+echo json_encode($response);

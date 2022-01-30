@@ -732,13 +732,18 @@ if (addBookmarkLink) {
     
         sendBookamarkData(`${bookmarkHandler}?query=${actionType}`)
             .then((data) => {
-                if (data.ok && actionType === "add") {
-                    addBookmarkLink.innerText = 'Remove from bookmarks';
-                    e.target.setAttribute("data-action-bookmark", "remove");
-                }
-                if (data.ok && actionType === "remove") {
-                    addBookmarkLink.innerText = 'Bookmark this ad';
-                    e.target.setAttribute("data-action-bookmark", "add");
+                if (data.success) {
+                    if (actionType === "add") {
+                        addBookmarkLink.innerText = 'Remove from bookmarks';
+                        e.target.setAttribute("data-action-bookmark", "remove");
+                    }
+                    if (actionType === "remove") {
+                        addBookmarkLink.innerText = 'Bookmark this ad';
+                        e.target.setAttribute("data-action-bookmark", "add");
+                    }
+                } else {
+                    alert(data.error);
+                    //console.log(data)
                 }
             })
     }
@@ -750,10 +755,10 @@ async function sendBookamarkData(url = '') {
         cache: 'no-cache', 
         credentials: "same-origin",
         headers: {
-            'Content-Type': 'text/html; charset=utf-8',
+            'Content-Type': 'application/json',
             'X-CSRFToken': csrf
         },
         referrerPolicy: 'no-referrer',
     });
-    return await response;
+    return await response.json();
 }  
