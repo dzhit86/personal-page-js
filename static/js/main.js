@@ -724,23 +724,26 @@ verifiedImages.forEach(element => {
 
 // Add bookmark
 const addBookmarkLink = document.getElementById("addBookmark");
-addBookmarkLink.addEventListener("click", addBookmark);
-function addBookmark (e) {
-    e.preventDefault();
-    const actionType = e.target.getAttribute("data-action-bookmark");
-
-    sendBookamarkData(`${bookmarkHandler}?query=${actionType}`)
-        .then((data) => {
-            if (data.ok && actionType === "add") {
-                addBookmarkLink.innerText = 'Remove from bookmarks';
-                e.target.setAttribute("data-action-bookmark", "remove");
-            }
-            if (data.ok && actionType === "remove") {
-                addBookmarkLink.innerText = 'Bookmark this ad';
-                e.target.setAttribute("data-action-bookmark", "add");
-            }
-        })
+if (addBookmarkLink) {
+    addBookmarkLink.addEventListener("click", addBookmark);
+    function addBookmark (e) {
+        e.preventDefault();
+        const actionType = e.target.getAttribute("data-action-bookmark");
+    
+        sendBookamarkData(`${bookmarkHandler}?query=${actionType}`)
+            .then((data) => {
+                if (data.ok && actionType === "add") {
+                    addBookmarkLink.innerText = 'Remove from bookmarks';
+                    e.target.setAttribute("data-action-bookmark", "remove");
+                }
+                if (data.ok && actionType === "remove") {
+                    addBookmarkLink.innerText = 'Bookmark this ad';
+                    e.target.setAttribute("data-action-bookmark", "add");
+                }
+            })
+    }
 }
+
 async function sendBookamarkData(url = '') {
     const response = await fetch(url, {
         method: 'GET',
