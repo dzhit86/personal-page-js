@@ -743,7 +743,7 @@ if (addBookmarkLink) {
                     }
                 } else {
                     alert(data.error);
-                    console.log(data)
+                    //console.log(data)
                 }
             })
     }
